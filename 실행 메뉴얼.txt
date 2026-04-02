@@ -1,59 +1,61 @@
-터미널에서 NP_PROJECT2에 node server.js 실행해서 http://localhost:3000 클릭
+베포 URL: https://honyaiwar-server.onrender.com
 
-DB
+    터미널에서 NP_PROJECT2에 node server.js 실행해서 http://localhost:3000 클릭
 
-스키마: honyai_defense
+    DB
 
-USE honyai_defense;
--- 1. 사용자 테이블
-CREATE TABLE users (
-    auth_code VARCHAR(20) PRIMARY KEY,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    last_login DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    coins INT DEFAULT 100
-);
--- 2. 챕터 진행도
-CREATE TABLE chapters (
-    auth_code VARCHAR(20) NOT NULL,
-    chapter_name VARCHAR(20) NOT NULL,
-    unlocked BOOLEAN DEFAULT FALSE,
-    highest_level INT DEFAULT 0,
-    PRIMARY KEY (auth_code, chapter_name),
-    FOREIGN KEY (auth_code) REFERENCES users(auth_code) ON DELETE CASCADE
-);
--- 3. 파워업
-CREATE TABLE power_ups (
-    auth_code VARCHAR(20) NOT NULL,
-    powerup_type VARCHAR(20) NOT NULL,
-    level INT DEFAULT 1,
-    PRIMARY KEY (auth_code, powerup_type),
-    FOREIGN KEY (auth_code) REFERENCES users(auth_code) ON DELETE CASCADE
-);
--- 4. 캐릭터
-CREATE TABLE characters (
-    auth_code VARCHAR(20) NOT NULL,
-    character_key VARCHAR(20) NOT NULL,
-    level INT DEFAULT 1,
-    unlocked BOOLEAN DEFAULT TRUE,
-    PRIMARY KEY (auth_code, character_key),
-    FOREIGN KEY (auth_code) REFERENCES users(auth_code) ON DELETE CASCADE
-);
--- 5. 편성
-CREATE TABLE formations (
-    auth_code VARCHAR(20) NOT NULL,
-    slot_index INT NOT NULL,
-    character_key VARCHAR(20),
-    PRIMARY KEY (auth_code, slot_index),
-    FOREIGN KEY (auth_code) REFERENCES users(auth_code) ON DELETE CASCADE
-);
--- 6. 스테이지 기록
-CREATE TABLE stage_records (
-    auth_code VARCHAR(20) NOT NULL,
-    stage_id VARCHAR(10) NOT NULL,
-    cleared BOOLEAN DEFAULT FALSE,
-    best_time INT,
-    clear_count INT DEFAULT 0,
-    last_cleared DATETIME,
-    PRIMARY KEY (auth_code, stage_id),
-    FOREIGN KEY (auth_code) REFERENCES users(auth_code) ON DELETE CASCADE
-);
+    스키마: honyai_defense
+
+    USE honyai_defense;
+    -- 1. 사용자 테이블
+    CREATE TABLE users (
+        auth_code VARCHAR(20) PRIMARY KEY,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        last_login DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        coins INT DEFAULT 100
+    );
+    -- 2. 챕터 진행도
+    CREATE TABLE chapters (
+        auth_code VARCHAR(20) NOT NULL,
+        chapter_name VARCHAR(20) NOT NULL,
+        unlocked BOOLEAN DEFAULT FALSE,
+        highest_level INT DEFAULT 0,
+        PRIMARY KEY (auth_code, chapter_name),
+        FOREIGN KEY (auth_code) REFERENCES users(auth_code) ON DELETE CASCADE
+    );
+    -- 3. 파워업
+    CREATE TABLE power_ups (
+        auth_code VARCHAR(20) NOT NULL,
+        powerup_type VARCHAR(20) NOT NULL,
+        level INT DEFAULT 1,
+        PRIMARY KEY (auth_code, powerup_type),
+        FOREIGN KEY (auth_code) REFERENCES users(auth_code) ON DELETE CASCADE
+    );
+    -- 4. 캐릭터
+    CREATE TABLE characters (
+        auth_code VARCHAR(20) NOT NULL,
+        character_key VARCHAR(20) NOT NULL,
+        level INT DEFAULT 1,
+        unlocked BOOLEAN DEFAULT TRUE,
+        PRIMARY KEY (auth_code, character_key),
+        FOREIGN KEY (auth_code) REFERENCES users(auth_code) ON DELETE CASCADE
+    );
+    -- 5. 편성
+    CREATE TABLE formations (
+        auth_code VARCHAR(20) NOT NULL,
+        slot_index INT NOT NULL,
+        character_key VARCHAR(20),
+        PRIMARY KEY (auth_code, slot_index),
+        FOREIGN KEY (auth_code) REFERENCES users(auth_code) ON DELETE CASCADE
+    );
+    -- 6. 스테이지 기록
+    CREATE TABLE stage_records (
+        auth_code VARCHAR(20) NOT NULL,
+        stage_id VARCHAR(10) NOT NULL,
+        cleared BOOLEAN DEFAULT FALSE,
+        best_time INT,
+        clear_count INT DEFAULT 0,
+        last_cleared DATETIME,
+        PRIMARY KEY (auth_code, stage_id),
+        FOREIGN KEY (auth_code) REFERENCES users(auth_code) ON DELETE CASCADE
+    );
