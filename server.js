@@ -11,7 +11,15 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
 // MySQL 데이터베이스 연결 설정
-const db = mysql.createConnection(process.env.MYSQL_PUBLIC_URL);
+const db = mysql.createConnection({
+    host: process.env.MYSQLHOST,        // MySQL 서버 주소
+    user: process.env.MYSQLUSER,             // MySQL 사용자명 (본인 설정에 맞게 변경)
+    password: process.env.MYSQLPASSWORD, // MySQL 비밀번호 (본인 설정에 맞게 변경)
+    database: process.env.MYSQLDATABASE, // 생성한 데이터베이스 이름
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
 
 // MySQL 연결
 db.connect((err) => {
