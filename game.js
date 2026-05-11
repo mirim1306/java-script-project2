@@ -1516,6 +1516,7 @@ const navigationMap = [
     { id: 'backToStartButton', action: goBack }, // 계정 찾기 -> 뒤로가기 (시작 화면)
 
     // --- 기타 버튼 ---
+    // 게임 종료 버튼
     { id: 'exitButton', action: () => {
         window.close();
         // window.close()가 실패할 경우를 대비
